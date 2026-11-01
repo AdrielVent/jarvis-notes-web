@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Jarvis Notes: record a voice log and get organized notes, transcribed privately in your browser.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co; img-src 'self' data:; media-src 'self' blob:; style-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Jarvis Notes</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.5 7.5 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1A7.5 7.5 0 0 0 9.6 19l.4 2.5h4l.4-2.5a7.5 7.5 0 0 0 2.6-1.5l2.4 1 2-3.4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="m15 15 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.5 1.5 0 0 1 0 2.1l-6.2 6.2a1.5 1.5 0 0 1-2.1 0Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-record" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M4.5 15v3a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M4.5 15v3a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5.5M14 11v5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4.5H15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M10.3 4.2 2.8 17.5A2 2 0 0 0 4.5 20.5h15a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0Z"/><path d="M12 9v5M12 17h.01" fill="none" stroke="var(--warning-glyph, #fff)" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <div class="wallpaper" aria-hidden="true"></div>
+  <a class="skip-link" href="#notes-heading">Skip to notes</a>
+
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-orb" aria-hidden="true"></span>
+        <span class="brand-name">Jarvis</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" id="about-button" aria-label="About, privacy, and settings">
+          <svg aria-hidden="true"><use href="#i-gear"/></svg>
+        </button>
+        <button class="icon-button" type="button" id="new-note-button" aria-label="New voice log">
+          <svg aria-hidden="true"><use href="#i-plus"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="offline-banner" class="banner" role="status" hidden>
+      You're offline. Recording still works; if transcription can't start, retry once you reconnect.
+    </div>
+
+    <main class="layout">
+      <section class="list-pane" aria-labelledby="notes-heading">
+        <h1 id="notes-heading" tabindex="-1">Notes</h1>
+
+        <div class="search">
+          <svg aria-hidden="true"><use href="#i-search"/></svg>
+          <label class="visually-hidden" for="search">Search notes</label>
+          <input id="search" type="search" placeholder="Search notes" autocomplete="off" spellcheck="false">
+        </div>
+
+        <div id="load-error" class="card load-error" role="alert" hidden>
+          <p class="load-error-title"><svg aria-hidden="true"><use href="#i-warning"/></svg>Saved notes couldn't be loaded</p>
+          <p class="secondary">Nothing has been changed or deleted. Saving is paused so your saved notes stay exactly as they were. <span id="load-error-detail"></span></p>
+          <button type="button" class="secondary-button" id="retry-load">Retry</button>
+        </div>
+
+        <div id="demo-banner" class="demo-banner" hidden>
+          <span><strong>Demo notes</strong> (synthetic, for presentations)</span>
+          <button type="button" class="link-button" id="remove-demo">Remove</button>
+        </div>
+
+        <div class="section-row">
+          <label class="pill section-pill">
+            <svg aria-hidden="true"><use href="#i-folder"/></svg>
+            <span class="visually-hidden">Log section</span>
+            <select id="section-select"></select>
+            <svg class="chevron" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+          </label>
+          <button type="button" class="pill pill-button" id="add-section">
+            <svg aria-hidden="true"><use href="#i-plus"/></svg>New Section
+          </button>
+        </div>
+
+        <div class="card filters">
+          <label class="filter-row">
+            <svg aria-hidden="true"><use href="#i-calendar"/></svg>
+            <span class="filter-label">Date</span>
+            <select id="date-filter"></select>
+          </label>
+          <label class="filter-row" id="tag-row">
+            <svg aria-hidden="true"><use href="#i-tag"/></svg>
+            <span class="filter-label">Tag</span>
+            <select id="tag-filter"></select>
+          </label>
+        </div>
+
+        <p class="pill notes-count" id="notes-count" aria-live="polite"></p>
+        <ul class="card note-list" id="note-list" aria-labelledby="notes-heading"></ul>
+        <div class="card empty-state" id="empty-state" hidden></div>
+
+        <div class="record-deck" id="record-deck">
+          <span class="led" id="deck-led" aria-hidden="true"></span>
+          <button type="button" class="aqua-button" id="record-button">
+            <svg aria-hidden="true"><use href="#i-mic"/></svg>
+            <span id="record-button-label">Record Voice Log</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="detail-pane" id="detail-pane" aria-live="off"></section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Audio is transcribed in this browser and never uploaded. Notes stay on this device.
+        <button type="button" class="link-button" id="footer-about">Privacy and credits</button></p>
+    </footer>
+  </div>
+
+  <dialog id="about-dialog" aria-labelledby="about-title">
+    <form method="dialog" class="dialog-body">
+      <h2 id="about-title">About Jarvis Notes</h2>
+      <p>Record a voice log about your internship, meeting, or project. Jarvis transcribes it with Whisper running inside this browser, then sorts what you said into a summary, key points, and action items.</p>
+
+      <h3>Privacy</h3>
+      <ul>
+        <li>Your audio is processed on this device and is never uploaded. It is kept only until you close the tab.</li>
+        <li>Notes are saved in this browser's storage. There are no accounts, analytics, or API keys.</li>
+        <li>The first transcription downloads the Whisper model (about 40 MB) from Hugging Face, and the engine code from jsDelivr. Those two services can see your IP address, as with any download.</li>
+      </ul>
+
+      <h3>Transcription engine</h3>
+      <p class="secondary"><span id="engine-status">Not loaded yet.</span></p>
+      <p class="dialog-actions">
+        <button type="button" class="secondary-button" id="prepare-engine">Download the model now</button>
+      </p>
+
+      <h3>Limits</h3>
+      <ul>
+        <li>English only, using the smallest Whisper model, so expect some wrong words. Check before you share.</li>
+        <li>Summaries, key points, and action items are picked from your own sentences by simple rules on this device. Nothing is invented, but nothing is checked for accuracy either.</li>
+      </ul>
+
+      <h3>Your data</h3>
+      <p class="dialog-actions">
+        <button type="button" class="secondary-button" id="load-demo">Load demo notes</button>
+        <button type="button" class="danger-button" id="delete-all">Delete all notes on this device</button>
+      </p>
+
+      <h3>Credits</h3>
+      <p class="secondary">The glossy capsule button and recorder styling are adapted from MIT-licensed SwiftUI projects by Bobby Bobak and Iain McKenzie. The aquarium wallpaper is cropped from diinki-aero (MIT, diinkikot); the photos inside it have no stated source. Full notices: <a href="THIRD_PARTY_NOTICES.md">THIRD_PARTY_NOTICES.md</a>.</p>
+
+      <p class="dialog-actions dialog-close"><button class="aqua-button aqua-small" value="close">Done</button></p>
+    </form>
+  </dialog>
+
+  <dialog id="section-dialog" aria-labelledby="section-title">
+    <form method="dialog" class="dialog-body" id="section-form">
+      <h2 id="section-title">New Section</h2>
+      <label class="field">
+        <span>Name</span>
+        <input id="section-name" type="text" maxlength="40" required autocomplete="off">
+      </label>
+      <p class="field-error" id="section-error" hidden>That section already exists.</p>
+      <p class="dialog-actions">
+        <button type="button" class="secondary-button" value="cancel" id="section-cancel">Cancel</button>
+        <button class="aqua-button aqua-small" value="save">Add Section</button>
+      </p>
+    </form>
+  </dialog>
+
+  <div id="live-region" class="visually-hidden" aria-live="polite"></div>
+</body>
+</html>
