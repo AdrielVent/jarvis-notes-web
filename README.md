@@ -1,4 +1,4 @@
-# Jarvis Notes (web)
+# VNUA LOCK (web)
 
 Record a voice log and get organized notes. Speech is transcribed with Whisper running inside your browser; audio is never uploaded, and notes are saved only in your browser's storage. No accounts, API keys, or analytics.
 

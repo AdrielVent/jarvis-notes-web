@@ -183,7 +183,7 @@ function emptyStateHTML() {
   const demoButton = store.notes.length === 0
     ? '<button type="button" class="secondary-button" data-action="load-demo">Load Demo Notes</button>'
     : "";
-  return `${icon("mic")}<h2>No Notes in ${esc(sections.selected)}</h2><p>Record a voice log and Jarvis will transcribe it and write organized notes.</p>
+  return `${icon("mic")}<h2>No Notes in ${esc(sections.selected)}</h2><p>Record a voice log and VNUA LOCK will transcribe it and write organized notes.</p>
     <div class="empty-actions">${demoButton}</div>`;
 }
 
