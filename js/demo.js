@@ -27,6 +27,51 @@ export function demoNotes(now = new Date()) {
 
   return [
     base({
+      title: "Bracket vibration test log",
+      type: "Work Log",
+      createdAt: daysAgo(now, 0, 17),
+      durationSeconds: 46,
+      tags: ["Test"],
+      summary: "Ran the sine sweep on the demo payload bracket; first resonance at 412 Hz, above the 300 Hz requirement. One accelerometer channel dropped out.",
+      keyPoints: [
+        "The first resonance came in at 412 hertz, which is above our 300 hertz requirement.",
+        "One accelerometer cable came loose at the connector, so channel three has no data after the first minute.",
+        "The fixture plate has its own mode near 1,800 hertz, so that peak is not the bracket.",
+      ],
+      actionItems: [{ text: "Add strain relief to the cable and rerun the Y axis tomorrow at 9 AM", done: false }],
+      transcript: "Ran the sine sweep on the demo payload bracket this morning, from 5 to 2,000 hertz at half a g. The first resonance came in at 412 hertz, which is above our 300 hertz requirement. I torqued all four fasteners to 25 inch-pounds before the run and wrote the torque wrench number in the traveler. One accelerometer cable came loose at the connector, so channel three has no data after the first minute. I learned that the fixture plate has its own mode near 1,800 hertz, so that peak is not the bracket. Next step is to add strain relief to the cable and rerun the Y axis tomorrow at 9 AM.",
+    }),
+    base({
+      title: "CubeSat thermal team meeting",
+      type: "Meeting",
+      createdAt: daysAgo(now, 0, 16),
+      durationSeconds: 38,
+      tags: ["CubeSat"],
+      summary: "Kept the passive thermal design and dropped the heater from the baseline to save 4 watts; the heater stays as a backup option.",
+      keyPoints: [
+        "We decided to keep the passive thermal design and drop the heater from the baseline to save 4 watts.",
+        "The battery still has to stay above 0 degrees Celsius in eclipse, so the heater stays as a backup option.",
+        "The structures lead is blocked until the updated mass budget comes in.",
+      ],
+      actionItems: [{ text: "Thermal lead reruns the orbit-average case with the new coating by Friday", done: false }],
+      transcript: "This was the weekly CubeSat team meeting with the thermal, power, and structures leads. We decided to keep the passive thermal design and drop the heater from the baseline to save 4 watts. The power lead said the battery still has to stay above 0 degrees Celsius in eclipse, so the heater stays as a backup option. Action item: the thermal lead will rerun the orbit-average case with the new coating by Friday. The structures lead is blocked until the updated mass budget comes in. Next meeting is Thursday at 6 PM.",
+    }),
+    base({
+      title: "STAR story draft: fixture deadline",
+      type: "Brain Dump",
+      createdAt: daysAgo(now, 0, 15),
+      durationSeconds: 40,
+      tags: ["Interview"],
+      summary: "Situation, task, action, and result for a fixture redesign story, with the caveat that only six trials were timed.",
+      keyPoints: [
+        "Situation: a fixture redesign for a demo assembly cell with a two-week deadline.",
+        "Task: cut the part changeover time. Action: modeled three fixture ideas in CAD and 3D printed the best one.",
+        "Result: about 5 minutes per changeover, down from about 12, but only six trials were timed.",
+      ],
+      actionItems: [{ text: "Turn this into a 90-second answer", done: false }],
+      transcript: "This is a brain dump for a behavioral interview story. The situation was a fixture redesign for a demo assembly cell with a two-week deadline. My task was to cut the part changeover time. I timed the old process at about 12 minutes per changeover. I modeled three fixture ideas in CAD and 3D printed the best one. The result was about 5 minutes per changeover, but I only timed six trials, so I should say that. Next step is to turn this into a 90-second answer.",
+    }),
+    base({
       title: "Engineering mixer planning",
       type: "Meeting",
       createdAt: daysAgo(now, 0, 9),

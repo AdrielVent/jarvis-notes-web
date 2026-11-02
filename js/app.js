@@ -1,6 +1,7 @@
 import { demoNotes } from "./demo.js";
 import { DATE_FILTERS, availableTags, dateFilterTitle, filterNotes, hasActiveFilters } from "./filters.js";
 import { clock, dateLong, dateShort, durationShort, durationSpoken, noteToMarkdown } from "./format.js";
+import { progressLabel } from "./model-progress.js";
 import { organize } from "./organize.js";
 import { Recorder, recordingSupported } from "./recorder.js";
 import { DEFAULT_SECTION, NoteStore, SectionStore, newId } from "./store.js";
@@ -40,6 +41,8 @@ const el = {
   loadErrorDetail: $("load-error-detail"),
   retryLoad: $("retry-load"),
   demoBanner: $("demo-banner"),
+  demoCta: $("demo-cta"),
+  demoCtaButton: $("demo-cta-button"),
   removeDemo: $("remove-demo"),
   deck: $("record-deck"),
   deckLed: $("deck-led"),
@@ -93,7 +96,7 @@ function engineProgressText() {
   switch (transcriber.state) {
     case "idle": return "Not downloaded in this session yet. It downloads automatically the first time you transcribe.";
     case "loading": return "Starting Whisper…";
-    case "downloading": return transcriber.progress === null ? "Downloading Whisper…" : `Downloading Whisper: ${Math.round(transcriber.progress * 100)}%`;
+    case "downloading": return transcriber.progress ? progressLabel(transcriber.progress) : "Downloading Whisper…";
     case "ready": return `Ready: ${ENGINE_LABEL} (transformers.js 4.3.2).`;
     case "failed": return "Couldn't load Whisper. Check your connection and try again.";
     default: throw new Error(`Unknown engine state: ${transcriber.state}`);
@@ -205,6 +208,8 @@ function renderList() {
   el.loadError.hidden = store.allowsWrites;
   el.loadErrorDetail.textContent = store.loadError ? `Details: ${store.loadError}` : "";
   el.demoBanner.hidden = !store.notes.some((note) => note.demo);
+  // The empty state already offers demo notes, so the banner only appears once real notes exist.
+  el.demoCta.hidden = !store.allowsWrites || store.notes.length === 0 || store.notes.some((note) => note.demo);
   el.offline.hidden = navigator.onLine;
 }
 
@@ -356,7 +361,7 @@ function updateClock(seconds) {
 }
 
 function noteKey(note) {
-  const engine = isProcessing(note) ? `${transcriber.state}:${Math.round((transcriber.progress ?? 0) * 100)}` : "";
+  const engine = isProcessing(note) ? `${transcriber.state}:${transcriber.progress?.phase ?? ""}:${Math.floor((transcriber.progress?.fraction ?? 0) * 100)}` : "";
   return `${note.id}|${note.updatedAt}|${note.status}|${engine}|${audioById.has(note.id)}`;
 }
 
@@ -629,13 +634,14 @@ function loadDemo() {
     return;
   }
   store.removeWhere((note) => note.demo);
-  for (const note of demoNotes()) store.upsert(note);
+  const notes = demoNotes();
+  for (const note of notes) store.upsert(note);
   sections.select(DEFAULT_SECTION);
   ui.query = "";
   el.search.value = "";
   ui.dateFilter = "any";
   ui.tag = null;
-  announce("Loaded 5 demo notes.");
+  announce(`Loaded ${notes.length} demo notes.`);
   render();
 }
 
@@ -717,6 +723,7 @@ el.retryLoad.addEventListener("click", () => {
   render();
 });
 el.removeDemo.addEventListener("click", removeDemo);
+el.demoCtaButton.addEventListener("click", loadDemo);
 
 el.detail.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-action]");

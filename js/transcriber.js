@@ -53,9 +53,9 @@ export class Transcriber {
 
   handle(data) {
     if (data.type === "progress") {
-      if (this.state !== "ready") {
+      if (this.state !== "ready" && data.phase !== "ready") {
         this.state = "downloading";
-        this.progress = data.total ? data.loaded / data.total : null;
+        this.progress = { phase: data.phase, fraction: data.fraction };
         this.emit();
       }
       return;

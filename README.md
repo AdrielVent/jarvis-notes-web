@@ -6,8 +6,8 @@ Record a voice log and get organized notes. Speech is transcribed with Whisper r
 - Tip: the first transcription downloads a 40 MB model. Open the page once on Wi-Fi before presenting, or use **Settings → Load demo notes** for synthetic sample notes.
 
 Run locally: `python3 -m http.server 8765` in this folder, then open http://localhost:8765.
-Tests: `node --test tests/`
+Tests: `node --test tests/*.mjs`
 
 Limits: English only; the smallest Whisper model mishears some words. Summaries, key points, and action items are selected from your own sentences by simple rules, not generated, so check them before sharing.
 
-Credits and licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The aquarium wallpaper's source photographs are uncredited upstream; their reuse rights are unverified.
+Credits and licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The wallpaper is original artwork; no third-party images are bundled.

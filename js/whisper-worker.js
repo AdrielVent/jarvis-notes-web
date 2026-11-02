@@ -5,20 +5,16 @@ const LIBRARY = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2/di
 const MODEL = "onnx-community/whisper-tiny.en";
 const MODEL_REVISION = "2575352d61be1bf7225cf8f8b268a4678025fc58";
 
+import { INITIAL_PROGRESS, nextProgress } from "./model-progress.js";
+
 let asrPromise = null;
-const fileProgress = new Map();
+let progress = INITIAL_PROGRESS;
 
 function reportProgress(event) {
-  if (event.status === "progress" && event.file && event.total) {
-    fileProgress.set(event.file, { loaded: event.loaded, total: event.total });
-    let loaded = 0;
-    let total = 0;
-    for (const entry of fileProgress.values()) {
-      loaded += entry.loaded;
-      total += entry.total;
-    }
-    self.postMessage({ type: "progress", loaded, total });
-  }
+  const next = nextProgress(progress, event);
+  if (next === progress) return;
+  progress = next;
+  self.postMessage({ type: "progress", phase: progress.phase, fraction: progress.fraction });
 }
 
 // A static cross-origin import kills a module worker before it can report anything (Chromium gives
@@ -37,6 +33,7 @@ async function createPipeline() {
 function loadModel() {
   asrPromise ??= createPipeline().catch((error) => {
     asrPromise = null;
+    progress = INITIAL_PROGRESS;
     throw error;
   });
   return asrPromise;

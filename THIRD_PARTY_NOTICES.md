@@ -1,6 +1,6 @@
 # Third-party notices
 
-Jarvis Notes (web) reimplements visual techniques from the first two projects below in CSS and bundles crops of one image from the third. No third-party fonts are bundled. Two libraries/models are loaded at runtime and are listed at the end.
+Jarvis Notes (web) reimplements visual techniques from the two projects below in CSS. It bundles no third-party images. No third-party fonts are bundled. Two libraries/models are loaded at runtime and are listed at the end.
 
 ## SwiftUI-AquaButton
 
@@ -65,25 +65,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-## diinki-aero wallpaper
+## Wallpaper
 
-- Source: https://github.com/diinki/diinki-aero
-- Version: commit 630a7fc2ac1aa6160585cafa61967581e8b51376, file `wallpapers/aquarium.png` (3840×2160, SHA-256 prefix 50dcf7f44092119c)
-- Used in: `assets/aquarium-wide.jpg` (top 3840×1760 of the original, scaled to 2400×1100) and `assets/aquarium-portrait.jpg` (1400×2160 slice at x offset 2440, scaled to 900 wide); both re-encoded as JPEG, with a light or dark wash drawn over them by `css/styles.css`
-- Attribution: the crop does not include the "diinki" signature from the bottom center of the original; this notice is the attribution
-- **Unverified:** the wallpaper is a composite of fish, butterfly, and water photographs that the repository does not credit. The MIT license below is diinki's and may not cover those photographs. Confirm their source before any public release or competition submission.
-
-```
-The MIT License (MIT)
-
-Copyright © 2025 diinkikot
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
+`assets/aero-water.svg` and `assets/aero-water-dark.svg` are original artwork drawn for this project (Nov 2, 2026). They replaced the earlier diinki-aero crop, whose source photographs had no stated rights. No third-party images are bundled.
 
 ## Loaded at runtime (not bundled)
 

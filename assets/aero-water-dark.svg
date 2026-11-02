@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B2A40"/><stop offset="1" stop-color="#0E3A55"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A3550"/><stop offset="1" stop-color="#041A2A"/>
+    </linearGradient>
+    <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.06"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="bubble" cx="0.35" cy="0.3" r="0.7">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/><stop offset="0.7" stop-color="#FFFFFF" stop-opacity="0.08"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0.25"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <path d="M0 470 Q800 400 1600 470 L1600 1000 L0 1000 Z" fill="url(#sea)"/>
+  <g fill="url(#ray)">
+    <polygon points="260,470 340,470 180,1000 40,1000"/>
+    <polygon points="620,450 690,450 640,1000 500,1000"/>
+    <polygon points="980,450 1040,450 1140,1000 1010,1000"/>
+    <polygon points="1320,465 1390,465 1580,1000 1440,1000"/>
+  </g>
+  <g fill="url(#bubble)" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2">
+    <circle cx="180" cy="820" r="38"/><circle cx="300" cy="680" r="18"/>
+    <circle cx="560" cy="900" r="26"/><circle cx="820" cy="760" r="44"/>
+    <circle cx="1060" cy="880" r="20"/><circle cx="1240" cy="640" r="30"/>
+    <circle cx="1420" cy="800" r="50"/><circle cx="1500" cy="560" r="14"/>
+  </g>
+</svg>
